@@ -43,3 +43,5 @@ spec:
           envFrom:
             - configMapRef:
                 name: tactical-frontend-config
+            - secretKeyRef:
+                name: secret-tactical-frontend
