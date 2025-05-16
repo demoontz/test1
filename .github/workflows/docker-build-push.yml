@@ -9,10 +9,6 @@ jobs:
       - name: Check out the repo
         uses: actions/checkout@v4
 
-      - name: Get Github Tag
-        id: prep
-        run: |
-          echo ::set-output name=version::${GITHUB_REF#refs/tags/v}
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v1
 
@@ -33,4 +29,4 @@ jobs:
           pull: false
           file: ./docker/containers/tactical-frontend/dockerfile
           platforms: linux/amd64
-          tags: tacticalrmm/tactical-frontend:${{ steps.prep.outputs.version }},tacticalrmm/tactical-frontend:latest
+          tags: tacticalrmm/tactical-frontend:latest
