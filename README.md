@@ -25,3 +25,7 @@ Local setup instructions:
 5. install by helm ongress-nginx, letsencrypt(obprem), metallb(onprem) and any of secret provider like external-secrets (i dont like use native k8s secrets)
 6. put docker config to regcred.yaml
 7. run pipeline, any push to pipeline will redeploy code to k8s
+
+logging: prometeus-grafana-loki stack, service monitor yaml for autodiscovery.
+hpa for autoscalling bu cpu
+
