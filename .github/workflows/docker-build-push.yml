@@ -30,3 +30,10 @@ jobs:
           file: ./docker/containers/tactical-frontend/dockerfile
           platforms: linux/amd64
           tags: demoontz/tactical-frontend:latest
+
+      - name: Deploy
+        uses: kodermax/kubectl-aws-eks@master
+        env:
+          KUBE_CONFIG_DATA: ${{ secrets.KUBE_CONFIG_DATA }}
+        with:
+          args: apply -f deploy/dev/. -n tactical-frontend

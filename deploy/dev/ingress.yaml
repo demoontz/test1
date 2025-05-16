@@ -1,0 +1,26 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    cert-manager.io/cluster-issuer: letsencrypt-production
+    nginx.ingress.kubernetes.io/enable-cors: "true"
+  labels:
+    app: tactical-frontend
+  name: tactical-frontend-ingress
+spec:
+  rules:
+    - host: tactical-frontend.test1.com
+      http:
+        paths:
+          - backend:
+              service:
+                name: tactical-frontend-service
+                port:
+                  number: 8080
+            pathType: Prefix
+            path: /
+  tls: # < placing a host in the TLS config will determine what ends up in the cert's subjectAltNames
+    - hosts:
+        - tactical-frontend.test1.com
+      secretName: tacticalfrontend-cert

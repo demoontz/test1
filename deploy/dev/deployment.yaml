@@ -1,0 +1,45 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tactical-frontend-deployment
+  labels:
+    app: tactical-frontend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: tactical-frontend
+  template:
+    metadata:
+      labels:
+        app: tactical-frontend
+    spec:
+      imagePullSecrets:
+        - name: regcred
+      containers:
+        - name: tactical-frontend
+          image: demoontz/tactical-frontend:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8080
+              name: http
+          readinessProbe:
+            httpGet:
+              port: 8080
+              path: /
+            initialDelaySeconds: 15
+            periodSeconds: 10
+          livenessProbe:
+            httpGet:
+              port: 8080
+              path: /
+            initialDelaySeconds: 15
+            periodSeconds: 10
+          resources:
+            requests:
+              memory: "512Mi"
+            limits:
+              memory: "2048Mi"
+          envFrom:
+            - configMapRef:
+                name: tactical-frontend-config
